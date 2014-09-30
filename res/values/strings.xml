@@ -14,5 +14,6 @@
     <string name="compose_tweet">Tweet</string>
     <string name="cancel_string">Cancel</string>
     <string name="tweet_string">Enter tweet here...</string>
+    <string name="character_count_string">140</string>
 
 </resources>

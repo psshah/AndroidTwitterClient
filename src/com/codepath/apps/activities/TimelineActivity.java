@@ -2,10 +2,14 @@ package com.codepath.apps.activities;
 
 import java.util.ArrayList;
 
+import org.apache.http.client.HttpResponseException;
 import org.json.JSONArray;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,11 +17,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import com.codepath.apps.adapters.EndlessScrollListener;
 import com.codepath.apps.adapters.TweetArrayAdapter;
 import com.codepath.apps.models.Tweet;
+import com.codepath.apps.models.User;
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.simpletwitterclient.TwitterApplication;
 import com.codepath.apps.simpletwitterclient.TwitterClient;
@@ -26,6 +31,7 @@ import com.loopj.android.http.RequestParams;
 
 import eu.erikw.PullToRefreshListView;
 import eu.erikw.PullToRefreshListView.OnRefreshListener;
+//import org.apache.http.Header;
 public class TimelineActivity extends Activity {
 	private TwitterClient client;
 	private ArrayList<Tweet> tweets;
@@ -111,9 +117,21 @@ public class TimelineActivity extends Activity {
     
 
 	private void populateTimeline(int page) {
+		if(!isNetworkAvailable()) {
+			Toast.makeText(this, "Internet is not connected, showing older tweets", Toast.LENGTH_SHORT).show();
+			// load offline from sqlite
+			
+			return;
+		}
+
 		RequestParams params = new RequestParams();
 		if(page == 0) {
+			// clear existing data
 			aTweets.clear();
+			/*
+			new Delete().from(Tweet.class).execute(); 
+			new Delete().from(User.class).execute(); 
+			*/
 			params.put("since_id", "1");
 			Log.d("debug", "since_id=1");
 		} else {
@@ -130,12 +148,28 @@ public class TimelineActivity extends Activity {
             	lvTweets.onRefreshComplete();
 			}
 
-			@Override
+        	@Override
 			public void onFailure(Throwable e, String s) {
 				Log.d("debug", e.toString());
 				Log.d("error", s.toString());
+				//XXX: check for 429
+				HttpResponseException hre = (HttpResponseException) e;
+				int statusCode = hre.getStatusCode();
+				Log.d("error", "status code=" + statusCode);
+				if(statusCode == 429) {
+					Toast.makeText(getBaseContext(), "Twitter is rate limiting this app,  please be patient", Toast.LENGTH_SHORT).show();
+				}
 			}
 			
 		});
 	}
+	
+	/* Check network connectivity */
+	private Boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager 
+	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+	}
+
 }

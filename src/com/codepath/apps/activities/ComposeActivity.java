@@ -5,9 +5,13 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.simpletwitterclient.TwitterApplication;
@@ -18,6 +22,8 @@ import com.loopj.android.http.RequestParams;
 public class ComposeActivity extends Activity {
 	private TwitterClient client;
 	private EditText etTweet;
+	private TextView tvCharsCount;
+	private Button btnTweet;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,36 @@ public class ComposeActivity extends Activity {
 		setContentView(R.layout.activity_compose);
 		client = TwitterApplication.getRestClient();
 		etTweet = (EditText) findViewById(R.id.etTweet);
+		tvCharsCount = (TextView) findViewById(R.id.tvCharsCount);
+		btnTweet = (Button) findViewById(R.id.btnTweet);
+		setupEditTextListener();
+	}
+
+	private void setupEditTextListener() {
+		etTweet.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void afterTextChanged(Editable s) {
+				// Fires right after the text has changed
+				int charsLeft = 140 - s.length();
+				tvCharsCount.setText(Integer.toString(charsLeft));
+				if(charsLeft <= 0) {
+					btnTweet.setEnabled(false);
+				} else {
+					btnTweet.setEnabled(true);
+				}
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {				
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+		});
+		
 	}
 
 	public void createTweet(View v) {
