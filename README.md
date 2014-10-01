@@ -20,6 +20,7 @@ Optional:
 Notes:
 - Currently, app uses the naive approach of reloading all tweets when user tries pull-to-refrehs
 - Started working on storing tweets offline in sqlite.
+- Hit the issue with onclicklistener and autolink for tweets not working together. I am working on a workaround (https://code.google.com/p/android/issues/detail?id=3414)
 
 The following libraries are used to make this possible:
 
@@ -28,7 +29,7 @@ The following libraries are used to make this possible:
  * [codepath-oauth](https://github.com/thecodepath/android-oauth-handler) - Custom-built library for managing OAuth authentication and signing of requests
  * [UniversalImageLoader](https://github.com/nostra13/Android-Universal-Image-Loader) - Used for async image loading and caching them in memory and on disk.
  * [ActiveAndroid](https://github.com/pardom/ActiveAndroid) - Simple ORM for persisting a local SQLite database on the Android device
-
+ * PulltoRefresh
  
  
 
