@@ -16,5 +16,17 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
-
+    <style name="TwitterTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/BlueActionBar</item>
+    </style>
+    
+    <style name="BlueActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#4099FF</item>
+        <item name="android:titleTextStyle">@style/BlueActionBar.TitleTextStyle</item>
+    </style>
+    
+    <style name="BlueActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    
 </resources>

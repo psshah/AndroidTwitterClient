@@ -1,18 +1,31 @@
 package com.codepath.apps.models;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User {
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
+
+@Table(name = "User")
+public class User extends Model implements Serializable {
+    @Column(name = "name")
 	private String name;
-	private long uid;
+    @Column(name = "userid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+	private long userid;
+    @Column(name = "screenName", unique = true)
 	private String screenName;	
+    @Column(name = "profileImageUrl")
 	private String profileImageUrl;
-	public String getName() {
+
+    public String getName() {
 		return name;
 	}
-	public long getUid() {
-		return uid;
+	public long getUserid() {
+		return userid;
 	}
 	public String getScreenName() {
 		return screenName;
@@ -21,18 +34,24 @@ public class User {
 		return profileImageUrl;
 	}
 
+    // Make sure to have a default constructor for every ActiveAndroid model
+    public User(){
+       super();
+    }
 
 	public static User fromJSON(JSONObject jsonObject) {
 		User user = new User();
 		try {
 			user.name = jsonObject.getString("name");
-			user.uid = jsonObject.getLong("id");
+			user.userid = jsonObject.getLong("id");
 			user.screenName = jsonObject.getString("screen_name");
 			user.profileImageUrl = jsonObject.getString("profile_image_url");
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
 		}
+		//user.save();
 		return user;
 	}
+	
 }

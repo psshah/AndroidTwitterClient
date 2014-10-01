@@ -1,5 +1,6 @@
 package com.codepath.apps.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -8,11 +9,20 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Column.ForeignKeyAction;
+import com.activeandroid.annotation.Table;
 
-public class Tweet {
+@Table(name = "Tweet")
+public class Tweet extends Model implements Serializable {
+    @Column(name = "body")
 	private String body;
+    @Column(name = "uid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
 	private long uid;
+    @Column(name = "createdAt")
 	private String createdAt;
+    @Column(name = "user", onUpdate = ForeignKeyAction.CASCADE, onDelete = ForeignKeyAction.CASCADE)
 	private User user;
 	private static long lowestUid;
 	
@@ -31,6 +41,11 @@ public class Tweet {
 	public static long getLowestUid() {
 		return lowestUid;
 	}
+
+    // Make sure to have a default constructor for every ActiveAndroid model
+	public Tweet() {
+		super();
+	}
 	
 	public static Tweet fromJSON(JSONObject jsonObject) {
 		Tweet tweet = new Tweet();
@@ -43,6 +58,7 @@ public class Tweet {
 			e.printStackTrace();
 			return null;
 		}
+		//tweet.save();
 		return tweet;
 	}
 	
@@ -62,4 +78,12 @@ public class Tweet {
 		}
 		return tweets;
 	}
+	
+	/*
+    public static List<Tweet> readAll() {
+        return new Select()
+          .from(Tweet.class)
+          .execute();
+    }
+    */
 }

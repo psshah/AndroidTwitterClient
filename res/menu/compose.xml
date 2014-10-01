@@ -11,7 +11,7 @@
 	    android:id="@+id/miCompose"
 	    android:title="Compose tweet"
 		android:onClick="onCompose"
-	    android:icon="@drawable/twitter_compose"
+	    android:icon="@drawable/compose"
 	    android:showAsAction="always"
 	/>    
     

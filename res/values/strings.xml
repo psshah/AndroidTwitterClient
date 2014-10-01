@@ -8,12 +8,14 @@
     <string name="login_label">Log in</string>
     <string name="title_activity_timeline">TimelineActivity</string>
     <string name="default_user">\@foo</string>
+    <string name="default_username">\Foo Bar</string>
     <string name="default_tweet">This is the tweet body</string>
     <string name="default_time">now</string>
     <string name="title_activity_compose">ComposeActivity</string>
     <string name="compose_tweet">Tweet</string>
     <string name="cancel_string">Cancel</string>
-    <string name="tweet_string">Enter tweet here...</string>
+    <string name="tweet_string">What\'s happening?</string>
     <string name="character_count_string">140</string>
+    <string name="title_activity_detail">DetailActivity</string>
 
 </resources>

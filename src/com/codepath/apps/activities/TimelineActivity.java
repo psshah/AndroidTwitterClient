@@ -15,14 +15,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.codepath.apps.adapters.EndlessScrollListener;
 import com.codepath.apps.adapters.TweetArrayAdapter;
 import com.codepath.apps.models.Tweet;
-import com.codepath.apps.models.User;
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.simpletwitterclient.TwitterApplication;
 import com.codepath.apps.simpletwitterclient.TwitterClient;
@@ -38,7 +39,9 @@ public class TimelineActivity extends Activity {
 	private ArrayAdapter<Tweet> aTweets;
 	private PullToRefreshListView lvTweets;
 	private final int REQUEST_CODE = 20;
-	
+	private final int REQUEST_CODE_DETAILED = 30;
+	public static String TWEET = "tweet";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,6 +83,19 @@ public class TimelineActivity extends Activity {
             	populateTimeline(0);
             }
         });
+        
+        lvTweets.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    		@Override
+    		public void onItemClick(AdapterView<?> parent, View view, 
+    				int position, long id) {
+    			// bring up edit activity with items[position]
+    			Intent i = new Intent(TimelineActivity.this, DetailActivity.class);
+    			Tweet selectedTweet = (Tweet) tweets.get(position);
+    			i.putExtra(TWEET, selectedTweet);
+    			startActivityForResult(i, REQUEST_CODE_DETAILED);
+    		}
+		});
+
 	}
 
 
@@ -119,8 +135,7 @@ public class TimelineActivity extends Activity {
 	private void populateTimeline(int page) {
 		if(!isNetworkAvailable()) {
 			Toast.makeText(this, "Internet is not connected, showing older tweets", Toast.LENGTH_SHORT).show();
-			// load offline from sqlite
-			
+			// XXX: load offline from sqlite			
 			return;
 		}
 
