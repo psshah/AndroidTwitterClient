@@ -19,7 +19,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
-
+	private static class ViewHolder {
+		TextView tvUserName;
+		TextView tvBody;
+		TextView tvCreationTime;
+		ImageView ivProfileImage;
+	}
+	
 	public TweetArrayAdapter(Context context, List<Tweet> tweets) {
 		super(context, 0, tweets);
 	}
@@ -27,28 +33,34 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// Get item at position
-		Tweet tweet = getItem(position);    
+		Tweet tweet = getItem(position); 
+		ViewHolder viewHolder;
 
 		// Check if this is recycled view, if not, create / inflate it.
 		if (convertView == null) {
+			viewHolder = new ViewHolder();
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.tweet_item, parent, false);
+			// Get resources from view to populate
+			viewHolder.tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
+			viewHolder.tvBody = (TextView) convertView.findViewById(R.id.tvBody);
+			viewHolder.tvCreationTime = (TextView) convertView.findViewById(R.id.tvCreationTime);
+			viewHolder.ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
+			convertView.setTag(viewHolder);
+		} 
+		else {
+			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		// Get resources from view to populate
-		TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
-		TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
-		TextView tvCreationTime = (TextView) convertView.findViewById(R.id.tvCreationTime);
-		ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
 
 		// Clear recycled view
-		ivProfileImage.setImageResource(0);
+		viewHolder.ivProfileImage.setImageResource(0);
 		
 		// Populate resources
 		ImageLoader imageLoader = ImageLoader.getInstance();
-		imageLoader.displayImage(tweet.getUser().getProfileImageUrl(), ivProfileImage);
-		tvUserName.setText(tweet.getUser().getScreenName());
-		tvBody.setText(tweet.getBody());
-		tvCreationTime.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
+		imageLoader.displayImage(tweet.getUser().getProfileImageUrl(), viewHolder.ivProfileImage);
+		viewHolder.tvUserName.setText(tweet.getUser().getScreenName());
+		viewHolder.tvBody.setText(tweet.getBody());
+		viewHolder.tvCreationTime.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
 		
 		return convertView;
 	}
