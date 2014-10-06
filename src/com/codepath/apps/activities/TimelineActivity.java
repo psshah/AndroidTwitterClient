@@ -17,12 +17,11 @@ import com.codepath.apps.fragments.MentionsTimelineFragment;
 import com.codepath.apps.listeners.FragmentTabListener;
 import com.codepath.apps.restclienttemplate.R;
 //import org.apache.http.Header;
+import com.codepath.apps.simpletwitterclient.ConnectionMgr;
 
 
 public class TimelineActivity extends FragmentActivity {
 	private final int REQUEST_CODE = 20;
-	private final int REQUEST_CODE_DETAILED = 30;
-	public static String TWEET = "tweet";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,20 +68,14 @@ public class TimelineActivity extends FragmentActivity {
 	    inflater.inflate(R.menu.compose, menu);
 	    return super.onCreateOptionsMenu(menu);
 	}
-	
-
-	/* 
-	 * Re-enable
-    @Override
-    protected void onResume() {
-		Log.d("debug", "on resume");
-	    populateTimeline(0);
-        super.onResume();
-    }
-	 */
 
     
     public void onCompose(MenuItem mi) {
+		if(!ConnectionMgr.isNetworkAvailable(this)) {
+			Toast.makeText(this, "Internet is not connected, cannot compose", Toast.LENGTH_SHORT).show();
+			return;
+		}
+
     	Intent i = new Intent(this, ComposeActivity.class);
 		startActivityForResult(i, REQUEST_CODE);
 	}
@@ -94,22 +87,7 @@ public class TimelineActivity extends FragmentActivity {
 	}
 
     /*
-	private void setupListViewListeners() {
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-		    @Override
-		    public void onLoadMore(int page, int totalItemsCount) {
-	                // Triggered only when new data needs to be appended to the list
-	                // Add whatever code is needed to append new items to your AdapterView
-		    	populateTimeline(page); 
-	                // or customLoadMoreDataFromApi(totalItemsCount); 
-		    }
-	
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				
-			}
-        });
-		
+	private void setupListViewListeners() {		
         lvTweets.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -121,32 +99,27 @@ public class TimelineActivity extends FragmentActivity {
             }
         });
         
-        lvTweets.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-    		@Override
-    		public void onItemClick(AdapterView<?> parent, View view, 
-    				int position, long id) {
-    			// bring up edit activity with items[position]
-    			Intent i = new Intent(TimelineActivity.this, DetailActivity.class);
-    			Tweet selectedTweet = (Tweet) tweets.get(position);
-    			i.putExtra(TWEET, selectedTweet);
-    			startActivityForResult(i, REQUEST_CODE_DETAILED);
-    		}
-		});
 	}
         */
 
-
-
     /*
-	 * Re-enable
+    @Override
+    protected void onResume() {
+		Log.d("debug", "on resume");
+	    populateTimeline(0);
+        super.onResume();
+    }
+*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Log.d("debug", "got intent result");
     	if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
     		Log.d("debug", "updating new timeline");
-    		populateTimeline(0);
+    		//populateTimeline(0);
+    		HomeTimelineFragment fragmentHomeTimeline = (HomeTimelineFragment) 
+    	            getSupportFragmentManager().findFragmentByTag("first");
+    		fragmentHomeTimeline.populateTimeline(0);
     	}
     }
-     */
     
 }

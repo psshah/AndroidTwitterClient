@@ -10,11 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codepath.apps.activities.DetailActivity;
 import com.codepath.apps.activities.ProfileActivity;
 import com.codepath.apps.models.Tweet;
 import com.codepath.apps.restclienttemplate.R;
@@ -56,9 +58,11 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-
 		// Clear recycled view
 		viewHolder.ivProfileImage.setImageResource(0);
+		viewHolder.tvBody.setFocusable(false);
+		viewHolder.tvCreationTime.setFocusable(false);
+		viewHolder.ivProfileImage.setFocusable(false);
 		
 		// Populate resources
 		ImageLoader imageLoader = ImageLoader.getInstance();
@@ -99,7 +103,6 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 	 
 		return relativeDate;
 	}
-	
 
 
 }

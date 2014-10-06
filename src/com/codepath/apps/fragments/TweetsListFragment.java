@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.http.client.HttpResponseException;
 import org.json.JSONArray;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,20 +13,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.codepath.apps.activities.DetailActivity;
+import com.codepath.apps.activities.TimelineActivity;
 import com.codepath.apps.adapters.EndlessScrollListener;
 import com.codepath.apps.adapters.TweetArrayAdapter;
 import com.codepath.apps.models.Tweet;
 import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.simpletwitterclient.ConnectionMgr;
 import com.codepath.apps.simpletwitterclient.TwitterApplication;
 import com.codepath.apps.simpletwitterclient.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import eu.erikw.PullToRefreshListView;
+import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
 public class TweetsListFragment extends Fragment {
 	public enum RequestType {
@@ -38,7 +43,10 @@ public class TweetsListFragment extends Fragment {
 	private TwitterClient client;
 	private RequestType requestType;
 	private long userId;
-	//private ImageButton ivProfileImage;
+	
+	public static String TWEET = "tweet";
+	private final int REQUEST_CODE_DETAILED = 30;
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,8 +64,6 @@ public class TweetsListFragment extends Fragment {
 		lvTweets = (PullToRefreshListView) v.findViewById(R.id.lvTweets);
 		lvTweets.setAdapter(aTweets);
 		setupListViewListeners();
-		//ivProfileImage = (ImageButton) v.findViewById(R.id.ivProfileImage);
-		//setupImageButtomListeners();
 		return v;
 	}
 	
@@ -80,13 +86,11 @@ public class TweetsListFragment extends Fragment {
 	
 	public void populateTimeline(int page) {
 		//Log.d("debug", "page=" + page);
-		/*Re-enable
-		if(!isNetworkAvailable(getActivity())) {
-			Toast.makeText(this, "Internet is not connected, showing older tweets", Toast.LENGTH_SHORT).show();
+		if(!ConnectionMgr.isNetworkAvailable(getActivity())) {
+			Toast.makeText(getActivity(), "Internet is not connected, showing older tweets", Toast.LENGTH_SHORT).show();
 			// XXX: load offline from sqlite			
 			return;
 		}
-		*/
 
 		RequestParams params = new RequestParams();
 		if(page == 0) {
@@ -185,6 +189,22 @@ public class TweetsListFragment extends Fragment {
 				
 			}
         });
+        
+        lvTweets.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    		@Override
+    		public void onItemClick(AdapterView<?> parent, View view, 
+    				int position, long id) {
+    			Log.d("DEBUG", "firing detailed activity");
+    			// bring up edit activity with items[position]
+    			Intent i = new Intent(getActivity(), DetailActivity.class);
+    			Tweet selectedTweet = (Tweet) tweets.get(position);
+    			i.putExtra(TWEET, selectedTweet);
+    			startActivityForResult(i, REQUEST_CODE_DETAILED);
+    		}
+		});
+
 	}	
+
+
 
 }

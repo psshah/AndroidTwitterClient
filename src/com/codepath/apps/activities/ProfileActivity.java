@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.codepath.apps.fragments.UserTimelineFragment;
 import com.codepath.apps.models.User;
 import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.simpletwitterclient.ConnectionMgr;
 import com.codepath.apps.simpletwitterclient.TwitterApplication;
 import com.codepath.apps.simpletwitterclient.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -71,13 +72,11 @@ public class ProfileActivity extends FragmentActivity {
 
 	
 	private void loadProfileInfo() {
-		/*Re-enable
-		if(!isNetworkAvailable(getActivity())) {
+		if(!ConnectionMgr.isNetworkAvailable(this)) {
 			Toast.makeText(this, "Internet is not connected, showing older tweets", Toast.LENGTH_SHORT).show();
 			// XXX: load offline from sqlite			
 			return;
 		}
-		*/
 
 		RequestParams params = new RequestParams();
 		client.getMyProfileInfo(params, new JsonHttpResponseHandler() {

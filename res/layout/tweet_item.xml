@@ -21,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:textIsSelectable="false"
         android:layout_toRightOf="@+id/ivProfileImage"
         android:text="@string/default_user" />
 
@@ -30,6 +31,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="10dip"
         android:layout_below="@+id/tvUserName"
+		android:textIsSelectable="false"
         android:layout_toRightOf="@+id/ivProfileImage"
         android:text="@string/default_tweet" />
 <!--        android:autoLink="all"
@@ -39,6 +41,7 @@
         android:id="@+id/tvCreationTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textIsSelectable="false"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="@string/default_time" />
