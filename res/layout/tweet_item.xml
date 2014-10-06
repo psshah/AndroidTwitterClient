@@ -3,14 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ImageView
+    <ImageButton
         android:id="@+id/ivProfileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:paddingTop="10dip"        
         android:paddingBottom="10dip"        
         android:paddingLeft="10dip"        
-        android:paddingRight="10dip"        
+        android:paddingRight="10dip"       
+        android:background="@null"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/twitter" />

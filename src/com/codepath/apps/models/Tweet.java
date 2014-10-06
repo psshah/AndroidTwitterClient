@@ -69,7 +69,7 @@ public class Tweet extends Model implements Serializable {
 				Tweet tweet = Tweet.fromJSON(jsonArray.getJSONObject(i));
 				if(tweet != null) {
 					tweets.add(tweet);
-					Log.d("debug", "adding tweet #" + tweet.uid);
+					//Log.d("debug", "adding tweet #" + tweet.uid);
 					lowestUid = tweet.uid;
 				}
 			} catch (JSONException e) {

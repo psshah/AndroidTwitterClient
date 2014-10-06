@@ -17,5 +17,9 @@
     <string name="tweet_string">What\'s happening?</string>
     <string name="character_count_string">140</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="default_followers">5 Followers</string>
+    <string name="default_following">5 Following</string>
+    <string name="default_tagline">This is my tagline</string>
 
 </resources>

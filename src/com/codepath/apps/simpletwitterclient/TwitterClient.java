@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 /*
@@ -56,6 +57,38 @@ public class TwitterClient extends OAuthBaseClient {
 			client.post(apiUrl, params, handler);
 		}		
 	}
+
+	public void getMentionsTimeline(RequestParams params,
+			AsyncHttpResponseHandler handler) {
+		Log.d("INFO", "uri = " + REST_URL + "statuses/mentions_timeline.json");
+		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+		if(params == null) {
+			client.get(apiUrl, null, handler);
+		}
+		else {
+			client.get(apiUrl, params, handler);
+		}
+	}
+
+	public void getMyProfileInfo(RequestParams params,
+			AsyncHttpResponseHandler handler) {
+		Log.d("INFO", "uri = " + REST_URL + "account/verify_credentials.json");
+		String apiUrl = getApiUrl("account/verify_credentials.json");
+		client.get(apiUrl, null, handler);
+	}
+
+	public void getUserTimeline(RequestParams params,
+			AsyncHttpResponseHandler handler) {
+		Log.d("INFO", "uri = " + REST_URL + "/statuses/user_timeline.json");
+		String apiUrl = getApiUrl("statuses/user_timeline.json");
+		if(params == null) {
+			client.get(apiUrl, null, handler);
+		}
+		else {
+			client.get(apiUrl, params, handler);
+		}		
+	}
+
 
 	/*
 	// CHANGE THIS

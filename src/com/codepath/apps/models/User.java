@@ -20,6 +20,9 @@ public class User extends Model implements Serializable {
 	private String screenName;	
     @Column(name = "profileImageUrl")
 	private String profileImageUrl;
+    private int followersCount;
+    private int followingCount;
+    public String tagline;
 
     public String getName() {
 		return name;
@@ -33,7 +36,16 @@ public class User extends Model implements Serializable {
 	public String getProfileImageUrl() {
 		return profileImageUrl;
 	}
-
+	public int getFollowersCount() {
+		return followersCount;
+	}
+	public int getFollowingCount() {
+		return followingCount;
+	}
+	public String getTagline() {
+		return tagline;
+	}
+	
     // Make sure to have a default constructor for every ActiveAndroid model
     public User(){
        super();
@@ -46,6 +58,9 @@ public class User extends Model implements Serializable {
 			user.userid = jsonObject.getLong("id");
 			user.screenName = jsonObject.getString("screen_name");
 			user.profileImageUrl = jsonObject.getString("profile_image_url");
+			user.followersCount = jsonObject.getInt("followers_count");
+			user.followingCount = jsonObject.getInt("friends_count");
+			user.tagline = jsonObject.getString("description");
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;

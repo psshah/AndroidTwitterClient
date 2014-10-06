@@ -4,15 +4,18 @@ import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
-import android.net.ParseException;
+import android.content.Intent;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.codepath.apps.activities.ProfileActivity;
 import com.codepath.apps.models.Tweet;
 import com.codepath.apps.restclienttemplate.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -25,15 +28,17 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		TextView tvCreationTime;
 		ImageView ivProfileImage;
 	}
+	private Context ctx;
 	
 	public TweetArrayAdapter(Context context, List<Tweet> tweets) {
-		super(context, 0, tweets);
+		super(context, R.layout.tweet_item, tweets);
+		ctx = context;
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		// Get item at position
-		Tweet tweet = getItem(position); 
+		final Tweet tweet = getItem(position); 
 		ViewHolder viewHolder;
 
 		// Check if this is recycled view, if not, create / inflate it.
@@ -62,6 +67,17 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		viewHolder.tvBody.setText(tweet.getBody());
 		viewHolder.tvCreationTime.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
 		
+		viewHolder.ivProfileImage.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				//Log.d("DEBUG", "position=" + position); 
+				Intent i = new Intent(ctx, ProfileActivity.class);
+				i.putExtra("started_from", "imageclick");
+				i.putExtra("userprof", tweet.getUser());
+				ctx.startActivity(i);
+			}
+		});
+
 		return convertView;
 	}
 
@@ -84,4 +100,6 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		return relativeDate;
 	}
 	
+
+
 }
