@@ -8,6 +8,9 @@ Required:
 - User can sign in to Twitter using OAuth login
 - User can view the tweets from their home timeline. It displays username, body and relative timestamp for each tweet
 - User can view more tweets as they scroll with infinite pagination
+- User can switch between Timeline and Mention views using tabs. Both views support infinite pagination.
+- User can navigate to view their own profile and see picture, tagline, number of followers, number of following, and profile tweets.
+- User can click on the profile image in any tweet to see another user's profile, including other user's timeline.
 
 Optional: 
 - Links in tweets are clickable and will launch the web browser 
@@ -16,6 +19,9 @@ Optional:
 - User can refresh tweets timeline by pulling down to refresh 
 - User can tap a tweet to display a "detailed" view of that tweet
 - Changed the theme to look 'twitter' like.
+- Robust error handling
+- Persist data in SQLite db, and load data from this database when offline.
+- Embed images in timeline and detailed view.
 
 Notes:
 - Currently, app uses the naive approach of reloading all tweets when user tries pull-to-refrehs
@@ -29,7 +35,7 @@ The following libraries are used to make this possible:
  * [codepath-oauth](https://github.com/thecodepath/android-oauth-handler) - Custom-built library for managing OAuth authentication and signing of requests
  * [UniversalImageLoader](https://github.com/nostra13/Android-Universal-Image-Loader) - Used for async image loading and caching them in memory and on disk.
  * [ActiveAndroid](https://github.com/pardom/ActiveAndroid) - Simple ORM for persisting a local SQLite database on the Android device
- * PulltoRefresh
+ * [PullToRefresh library](https://github.com/erikwt/PullToRefresh-ListView) for pull-to-refresh functionality. 
  
  
 

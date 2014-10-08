@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,9 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		TextView tvCreationTime;
 		ImageView ivProfileImage;
 		ImageView ivMedia;
+		ImageButton ibReply;
+		ImageButton ibRetweet;
+		ImageButton ibFavourite;
 	}
 	private Context ctx;
 	
@@ -54,6 +58,9 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 			viewHolder.tvCreationTime = (TextView) convertView.findViewById(R.id.tvCreationTime);
 			viewHolder.ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
 			viewHolder.ivMedia = (ImageView) convertView.findViewById(R.id.ivMedia);
+			viewHolder.ibReply = (ImageButton) convertView.findViewById(R.id.ibReply);
+			viewHolder.ibRetweet = (ImageButton) convertView.findViewById(R.id.ibRetweet);
+			viewHolder.ibFavourite = (ImageButton) convertView.findViewById(R.id.ibFavourite);
 			convertView.setTag(viewHolder);
 		} 
 		else {
@@ -68,6 +75,9 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		viewHolder.tvCreationTime.setFocusable(false);
 		viewHolder.ivProfileImage.setFocusable(false);
 		viewHolder.ivMedia.setFocusable(false);
+		viewHolder.ibReply.setFocusable(false);
+		viewHolder.ibRetweet.setFocusable(false);
+		viewHolder.ibFavourite.setFocusable(false);
 		
 		// Populate resources
 		ImageLoader imageLoader = ImageLoader.getInstance();
@@ -76,6 +86,11 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		viewHolder.tvBody.setText(tweet.getBody());
 		viewHolder.tvCreationTime.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
 		
+		if(tweet.getMediaUrl() != null) {
+			viewHolder.ivMedia.getLayoutParams().height = 200;
+		} else {
+			viewHolder.ivMedia.getLayoutParams().height = 0;			
+		}
 		imageLoader.displayImage(tweet.getMediaUrl(), viewHolder.ivMedia);
 		
 		viewHolder.ivProfileImage.setOnClickListener(new View.OnClickListener() {			

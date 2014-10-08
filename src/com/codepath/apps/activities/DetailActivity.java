@@ -38,7 +38,11 @@ public class DetailActivity extends Activity {
 			imageLoader.displayImage(selectedTweet.getUser().getProfileImageUrl(), dvivProfileImageUrl);
 			Log.d("INFO", "body is " + selectedTweet.getBody());
 			dvtvBody.setText(selectedTweet.getBody());
-			imageLoader.displayImage(selectedTweet.getMediaUrl(), dvivMedia);
+			if(selectedTweet.getMediaUrl() != null) {
+				imageLoader.displayImage(selectedTweet.getMediaUrl(), dvivMedia);
+			} else {
+				dvivMedia.getLayoutParams().height = 10;
+			}
 		}
 		else {
 			Log.d("ERROR", "did not find selected tweet");

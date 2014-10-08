@@ -48,37 +48,6 @@
         android:linksClickable="true"
         android:text="@string/tweet_string" />
 
-    <ImageButton
-        android:id="@+id/btnReply"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
-        android:background="@null"
-        android:scaleType="centerCrop"
-        android:src="@drawable/reply" />
-
-    <ImageButton
-        android:id="@+id/btnRetweet"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@null"
-        android:scaleType="centerCrop"
-        android:src="@drawable/retweet" />
-
-    <ImageButton
-        android:id="@+id/btnFavourite"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="30dp"
-        android:background="@null"
-        android:scaleType="centerCrop"
-        android:src="@drawable/favourite" />
-
     <ImageView
         android:id="@+id/dvivMedia"
         android:layout_width="wrap_content"
@@ -88,5 +57,36 @@
         android:layout_below="@+id/dvtvBody"
         android:scaleType="centerCrop"
         android:src="@drawable/twitter" />
+    
+    <ImageButton
+        android:id="@+id/btnReply"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:layout_below="@+id/dvivMedia"
+        android:src="@drawable/reply" />
 
+    <ImageButton
+        android:id="@+id/btnRetweet"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerHorizontal="true"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:layout_alignTop="@+id/btnReply"
+        android:src="@drawable/retweet" />
+
+    <ImageButton
+        android:id="@+id/btnFavourite"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:layout_alignTop="@+id/btnReply"        
+        android:src="@drawable/favourite" />
+    
 </RelativeLayout>
