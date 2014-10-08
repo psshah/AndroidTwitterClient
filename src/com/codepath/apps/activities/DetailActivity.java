@@ -41,7 +41,7 @@ public class DetailActivity extends Activity {
 			if(selectedTweet.getMediaUrl() != null) {
 				imageLoader.displayImage(selectedTweet.getMediaUrl(), dvivMedia);
 			} else {
-				dvivMedia.getLayoutParams().height = 10;
+				dvivMedia.getLayoutParams().height = 0;
 			}
 		}
 		else {

@@ -22,6 +22,7 @@ public class Tweet extends Model implements Serializable {
 	private long uid;
     @Column(name = "createdAt")
 	private String createdAt;
+    @Column(name = "mediaUrl")
     private String mediaUrl;
     @Column(name = "user", onUpdate = ForeignKeyAction.CASCADE, onDelete = ForeignKeyAction.CASCADE)
 	private User user;

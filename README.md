@@ -41,7 +41,7 @@ The following libraries are used to make this possible:
 
 Walkthrough of all user stories:
 
-![Video Walkthrough](twitterclient.gif)
+![Video Walkthrough](twitterclient2.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
