@@ -31,6 +31,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import eu.erikw.PullToRefreshListView;
+import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
 public class TweetsListFragment extends Fragment {
 	public enum RequestType {
@@ -107,16 +108,12 @@ public class TweetsListFragment extends Fragment {
 				
 		switch (this.requestType) {
 		case HOME_TIMELINE:
-			//TimelineActivity activity = (TimelineActivity) getActivity();
-			//activity.showProgressBar();
 			client.getHomeTimeline(params, new JsonHttpResponseHandler() {
 				@Override
 				public void onSuccess(int arg0, JSONArray jsonArray) {
 					// Log.d("INFO", jsonArray.toString());
 					addAll(Tweet.fromJSONArray(jsonArray));
-					/*
-					 * Re-enable lvTweets.onRefreshComplete();
-					 */
+					lvTweets.onRefreshComplete();
 				}
 
 				@Override
@@ -124,7 +121,6 @@ public class TweetsListFragment extends Fragment {
 					handleFailure(e, s);
 				}
 			});
-			//activity.hideProgressBar();
 			break;
 		case MENTIONS_TIMELINE:
 			client.getMentionsTimeline(params, new JsonHttpResponseHandler() {
@@ -132,9 +128,7 @@ public class TweetsListFragment extends Fragment {
 				public void onSuccess(int arg0, JSONArray jsonArray) {
 					//Log.d("INFO", jsonArray.toString());
 					addAll(Tweet.fromJSONArray(jsonArray));
-	            	/* Re-enable
-	            	 * lvTweets.onRefreshComplete();
-	            	 */
+					lvTweets.onRefreshComplete();
 				}
 
 	        	@Override
@@ -151,6 +145,7 @@ public class TweetsListFragment extends Fragment {
 				@Override
 				public void onSuccess(int arg0, JSONArray jsonArray) {
 					addAll(Tweet.fromJSONArray(jsonArray));
+					lvTweets.onRefreshComplete();
 				}
 
 	        	@Override
@@ -171,9 +166,6 @@ public class TweetsListFragment extends Fragment {
 		int statusCode = hre.getStatusCode();
 		Log.d("error", "status code=" + statusCode);
 		if(statusCode == 429) {
-			/*
-			 * Re-enable: how to pass context for toast
-			 */
 			Toast.makeText(getActivity().getBaseContext(), "Twitter is rate limiting this app,  please be patient", Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -206,6 +198,17 @@ public class TweetsListFragment extends Fragment {
     			startActivityForResult(i, REQUEST_CODE_DETAILED);
     		}
 		});
+
+        lvTweets.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call listView.onRefreshComplete() when
+                // once the network request has completed successfully.
+    			Log.d("debug", "refreshing list");
+            	populateTimeline(0);
+            }
+        });
 
 	}	
 

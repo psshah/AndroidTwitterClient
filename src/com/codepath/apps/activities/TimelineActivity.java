@@ -84,21 +84,6 @@ public class TimelineActivity extends FragmentActivity {
 		startActivity(i);
 	}
 
-    /*
-	private void setupListViewListeners() {		
-        lvTweets.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call listView.onRefreshComplete() when
-                // once the network request has completed successfully.
-    			Log.d("debug", "refreshing list");
-            	populateTimeline(0);
-            }
-        });
-        
-	}
-        */
 
     /*
     @Override
