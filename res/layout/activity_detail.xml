@@ -2,18 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     tools:context="${relativePackage}.${activityClass}" >
 
-        <ImageView
+    <ImageView
         android:id="@+id/dvivProfileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:paddingTop="10dip"        
-        android:paddingBottom="10dip"        
-        android:paddingLeft="10dip"        
-        android:paddingRight="10dip"        
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:paddingBottom="10dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="10dip"
         android:src="@drawable/twitter" />
 
     <TextView
@@ -28,32 +30,32 @@
         android:id="@+id/dvtvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:autoLink="all"
-     	android:linksClickable="true"        
-        android:paddingBottom="10dip"     	
         android:layout_below="@+id/dvtvUserName"
         android:layout_toRightOf="@+id/dvivProfileImage"
+        android:autoLink="all"
+        android:linksClickable="true"
+        android:paddingBottom="10dip"
         android:text="@string/default_user" />
 
     <TextView
         android:id="@+id/dvtvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:autoLink="all"
- 		android:linksClickable="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/dvivProfileImage"
+        android:autoLink="all"
+        android:linksClickable="true"
         android:text="@string/tweet_string" />
 
     <ImageButton
         android:id="@+id/btnReply"
         android:layout_width="30dp"
         android:layout_height="30dp"
-		android:scaleType="centerCrop"
-		android:background="@null" 
         android:layout_alignParentBottom="true"
-		android:layout_marginLeft="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
         android:src="@drawable/reply" />
 
     <ImageButton
@@ -76,5 +78,15 @@
         android:background="@null"
         android:scaleType="centerCrop"
         android:src="@drawable/favourite" />
-    
+
+    <ImageView
+        android:id="@+id/dvivMedia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/dvtvBody"
+        android:scaleType="centerCrop"
+        android:src="@drawable/twitter" />
+
 </RelativeLayout>

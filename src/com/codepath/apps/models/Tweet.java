@@ -22,6 +22,7 @@ public class Tweet extends Model implements Serializable {
 	private long uid;
     @Column(name = "createdAt")
 	private String createdAt;
+    private String mediaUrl;
     @Column(name = "user", onUpdate = ForeignKeyAction.CASCADE, onDelete = ForeignKeyAction.CASCADE)
 	private User user;
 	private static long lowestUid;
@@ -34,6 +35,9 @@ public class Tweet extends Model implements Serializable {
 	}
 	public String getCreatedAt() {
 		return createdAt;
+	}
+	public String getMediaUrl() {
+		return mediaUrl;
 	}
 	public User getUser() {
 		return user;
@@ -53,6 +57,13 @@ public class Tweet extends Model implements Serializable {
 			tweet.body = jsonObject.getString("text");
 			tweet.uid = jsonObject.getLong("id");
 			tweet.createdAt = jsonObject.getString("created_at");
+			JSONObject entities = jsonObject.getJSONObject("entities");
+			if(entities.has("media")) {
+				JSONArray mediaArr = entities.getJSONArray("media");
+				if(mediaArr.length() > 0) {
+					tweet.mediaUrl = mediaArr.getJSONObject(0).getString("media_url");
+				}
+			}
 			tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -79,11 +90,4 @@ public class Tweet extends Model implements Serializable {
 		return tweets;
 	}
 	
-	/*
-    public static List<Tweet> readAll() {
-        return new Select()
-          .from(Tweet.class)
-          .execute();
-    }
-    */
 }

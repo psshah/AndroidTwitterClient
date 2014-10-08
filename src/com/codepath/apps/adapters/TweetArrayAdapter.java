@@ -29,6 +29,7 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		TextView tvBody;
 		TextView tvCreationTime;
 		ImageView ivProfileImage;
+		ImageView ivMedia;
 	}
 	private Context ctx;
 	
@@ -52,6 +53,7 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 			viewHolder.tvBody = (TextView) convertView.findViewById(R.id.tvBody);
 			viewHolder.tvCreationTime = (TextView) convertView.findViewById(R.id.tvCreationTime);
 			viewHolder.ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
+			viewHolder.ivMedia = (ImageView) convertView.findViewById(R.id.ivMedia);
 			convertView.setTag(viewHolder);
 		} 
 		else {
@@ -60,9 +62,12 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 
 		// Clear recycled view
 		viewHolder.ivProfileImage.setImageResource(0);
-		viewHolder.tvBody.setFocusable(false);
+		viewHolder.ivMedia.setImageResource(0);
+		
+		viewHolder.tvBody.setFocusable(false);	// to allow onItemClickListener on list item
 		viewHolder.tvCreationTime.setFocusable(false);
 		viewHolder.ivProfileImage.setFocusable(false);
+		viewHolder.ivMedia.setFocusable(false);
 		
 		// Populate resources
 		ImageLoader imageLoader = ImageLoader.getInstance();
@@ -70,6 +75,8 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		viewHolder.tvUserName.setText(tweet.getUser().getScreenName());
 		viewHolder.tvBody.setText(tweet.getBody());
 		viewHolder.tvCreationTime.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
+		
+		imageLoader.displayImage(tweet.getMediaUrl(), viewHolder.ivMedia);
 		
 		viewHolder.ivProfileImage.setOnClickListener(new View.OnClickListener() {			
 			@Override
