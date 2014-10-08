@@ -1,6 +1,6 @@
 This is an Android application for searching images using Google search API using filters, and being able to zoom and share images. 
 
-Time spent: 15 hours spent in total
+Time spent: 15+20 hours spent in total
 
 Completed user stories:
 
