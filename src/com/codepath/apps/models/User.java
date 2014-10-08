@@ -1,6 +1,7 @@
 package com.codepath.apps.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,7 +9,7 @@ import org.json.JSONObject;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
 
 @Table(name = "User")
 public class User extends Model implements Serializable {
@@ -20,8 +21,11 @@ public class User extends Model implements Serializable {
 	private String screenName;	
     @Column(name = "profileImageUrl")
 	private String profileImageUrl;
+    @Column(name = "followersCount")
     private int followersCount;
+    @Column(name = "followingCount")
     private int followingCount;
+    @Column(name = "tagline")
     public String tagline;
 
     public String getName() {
@@ -65,8 +69,15 @@ public class User extends Model implements Serializable {
 			e.printStackTrace();
 			return null;
 		}
-		//user.save();
-		return user;
+		// save user in database if not exists
+		//User dbUser = new Select().from(User.class).where("screenName = ?",user.username).executeSingle();
+		User dbUser = new Select().from(User.class).where("userid=?", user.userid).executeSingle();
+		if(dbUser == null) {
+			user.save();
+			return user;
+		} else {
+			return dbUser;
+		}
 	}
 	
 }

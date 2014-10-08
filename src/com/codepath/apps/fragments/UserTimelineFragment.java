@@ -23,7 +23,7 @@ public class UserTimelineFragment extends TweetsListFragment {
 		userId = getArguments().getLong("userid");	
 		setRequestType(RequestType.USER_TIMELINE);
 		setUserId(userId);
-    	Toast.makeText(getActivity(), "on create, set user id=" +userId, Toast.LENGTH_SHORT).show();
+    	//Toast.makeText(getActivity(), "on create, set user id=" +userId, Toast.LENGTH_SHORT).show();
 		populateTimeline(0);
 	}
 

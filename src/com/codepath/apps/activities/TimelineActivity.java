@@ -9,15 +9,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.apps.fragments.HomeTimelineFragment;
 import com.codepath.apps.fragments.MentionsTimelineFragment;
 import com.codepath.apps.listeners.FragmentTabListener;
 import com.codepath.apps.restclienttemplate.R;
-//import org.apache.http.Header;
 import com.codepath.apps.simpletwitterclient.ConnectionMgr;
+//import org.apache.http.Header;
 
 
 public class TimelineActivity extends FragmentActivity {
@@ -27,7 +26,6 @@ public class TimelineActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
-		//setupListViewListeners();         
 		setupTabs();
 	}
 
@@ -115,7 +113,6 @@ public class TimelineActivity extends FragmentActivity {
 		Log.d("debug", "got intent result");
     	if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
     		Log.d("debug", "updating new timeline");
-    		//populateTimeline(0);
     		HomeTimelineFragment fragmentHomeTimeline = (HomeTimelineFragment) 
     	            getSupportFragmentManager().findFragmentByTag("first");
     		fragmentHomeTimeline.populateTimeline(0);

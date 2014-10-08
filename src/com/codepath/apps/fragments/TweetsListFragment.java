@@ -1,6 +1,7 @@
 package com.codepath.apps.fragments;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.client.HttpResponseException;
 import org.json.JSONArray;
@@ -17,8 +18,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
 import com.codepath.apps.activities.DetailActivity;
-import com.codepath.apps.activities.TimelineActivity;
 import com.codepath.apps.adapters.EndlessScrollListener;
 import com.codepath.apps.adapters.TweetArrayAdapter;
 import com.codepath.apps.models.Tweet;
@@ -30,7 +31,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import eu.erikw.PullToRefreshListView;
-import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
 public class TweetsListFragment extends Fragment {
 	public enum RequestType {
@@ -88,7 +88,9 @@ public class TweetsListFragment extends Fragment {
 		//Log.d("debug", "page=" + page);
 		if(!ConnectionMgr.isNetworkAvailable(getActivity())) {
 			Toast.makeText(getActivity(), "Internet is not connected, showing older tweets", Toast.LENGTH_SHORT).show();
-			// XXX: load offline from sqlite			
+			clearAll();
+			List<Tweet> tweetListCached = new Select().from(Tweet.class).orderBy("uid DESC").execute();
+			aTweets.addAll(tweetListCached);
 			return;
 		}
 
@@ -105,21 +107,24 @@ public class TweetsListFragment extends Fragment {
 				
 		switch (this.requestType) {
 		case HOME_TIMELINE:
-		client.getHomeTimeline(params, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int arg0, JSONArray jsonArray) {
-				//Log.d("INFO", jsonArray.toString());
-				addAll(Tweet.fromJSONArray(jsonArray));
-            	/* Re-enable
-            	 * lvTweets.onRefreshComplete();
-            	 */
-			}
+			//TimelineActivity activity = (TimelineActivity) getActivity();
+			//activity.showProgressBar();
+			client.getHomeTimeline(params, new JsonHttpResponseHandler() {
+				@Override
+				public void onSuccess(int arg0, JSONArray jsonArray) {
+					// Log.d("INFO", jsonArray.toString());
+					addAll(Tweet.fromJSONArray(jsonArray));
+					/*
+					 * Re-enable lvTweets.onRefreshComplete();
+					 */
+				}
 
-        	@Override
-			public void onFailure(Throwable e, String s) {
-        		handleFailure(e, s);
-        	}
-		});
+				@Override
+				public void onFailure(Throwable e, String s) {
+					handleFailure(e, s);
+				}
+			});
+			//activity.hideProgressBar();
 			break;
 		case MENTIONS_TIMELINE:
 			client.getMentionsTimeline(params, new JsonHttpResponseHandler() {
@@ -153,7 +158,6 @@ public class TweetsListFragment extends Fragment {
 	        		handleFailure(e, s);
 				}			
 			});
-
 		default:
 			break;
 		}

@@ -43,10 +43,10 @@ public class Tweet extends Model implements Serializable {
 	}
 
     // Make sure to have a default constructor for every ActiveAndroid model
-	public Tweet() {
-		super();
+	public Tweet(){
+		user = new User();
 	}
-	
+
 	public static Tweet fromJSON(JSONObject jsonObject) {
 		Tweet tweet = new Tweet();
 		try {
@@ -58,7 +58,7 @@ public class Tweet extends Model implements Serializable {
 			e.printStackTrace();
 			return null;
 		}
-		//tweet.save();
+		tweet.save();
 		return tweet;
 	}
 	
